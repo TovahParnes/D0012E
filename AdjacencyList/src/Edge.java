@@ -4,7 +4,7 @@ public class Edge {
 	
 	public Edge(int to) {
 		this.connection = to;
-		this.weight = 0;
+		this.weight = 1;
 	}
 	
 	public Edge(int to, int weight) {

@@ -31,6 +31,10 @@ public class Graph {
             System.out.println("Invalid vertex/vertices.");
             return;
         }
+        if (from == to) {
+            System.out.println("Can't create edge to self.");
+            return;
+        }
         for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
             if(list.get(from).get(i).getConnection() == to){
                 System.out.println("Edge already exists.");
@@ -44,6 +48,10 @@ public class Graph {
     public void addEdge(int from, int to) {
         if (from > this.vertex || to > this.vertex) {
             System.out.println("Invalid vertex/vertices.");
+            return;
+        }
+        if (from == to) {
+            System.out.println("Can't create edge to self.");
             return;
         }
         for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
@@ -61,12 +69,12 @@ public class Graph {
         if (index == -1) {
             return false;
         }
-        list.get(to).get(from).setWeight(weight);
+        list.get(from).get(index).setWeight(weight);
         index = findEdge(to, from);
         if (index == -1) {
             return false;
         }
-        list.get(index).get(to).setWeight(weight);
+        list.get(to).get(index).setWeight(weight);
 
         return true;
     }
@@ -79,6 +87,8 @@ public class Graph {
                     System.out.print(list.get(i).get(j).getConnection() + "(" + list.get(i).get(j).getWeight() + ") ");
                 }
                 System.out.println();
+            } else {
+                System.out.println(i);
             }
         }
     }
@@ -126,8 +136,6 @@ public class Graph {
     public static void main(String[] args) {
         Graph graph = new Graph(5);
 
-        graph.addEdge(1, 2);
         graph.printGraph();
-
     }
 }
