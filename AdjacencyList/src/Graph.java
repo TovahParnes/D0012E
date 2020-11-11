@@ -8,7 +8,7 @@ public class Graph {
         this.vertex = vertex;
         list = new ArrayList<LinkedList<Edge>>(); // Instanciate the list.
 
-        for (int i = 0; i < vertex; i++) {
+        for (int i = 0; i < (vertex+1); i++) {
             list.add(new LinkedList<Edge>()); // Initialize list
         }
     }
@@ -80,7 +80,7 @@ public class Graph {
     }
 
     public void printGraph() {                  // Prints all connections between vertices with weights in parentheses
-        for (int i = 0; i < vertex; i++) {
+        for (int i = 1; i < vertex+1; i++) {
             if (list.get(i).size() > 0) {
                 System.out.print(i + " -> ");
                 for (int j = 0; j < list.get(i).size(); j++) {
@@ -135,7 +135,6 @@ public class Graph {
 
     public static void main(String[] args) {
         Graph graph = new Graph(5);
-
-        graph.printGraph();
+        graph.addEdge(1,5,3);
     }
 }

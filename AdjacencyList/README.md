@@ -1,7 +1,7 @@
 ADJLIST
 
 constructor
-	set vertex no.				c
+	set vertex no.				    c
 	instanciate vertex list			c
 
 	for each vertex (1 > n)			max(n)
@@ -10,12 +10,12 @@ constructor
 addEdge(with weight)
 	IF [test for negative weight]		c
 
-	IF [test if vertex exists]		c
+	IF [test if vertex exists]		    c
 
-	IF [test if self]			c
+	IF [test if self]		    	    c
 
 	for each edge in vertex1(0 > n-1)	max(n-1)
-		IF [edge exists]		c
+		IF [edge exists]	    	c
 			return
 	
 	connect v1 to v2 /w weight		c
