@@ -136,5 +136,8 @@ public class Graph {
     public static void main(String[] args) {
         Graph graph = new Graph(5);
         graph.addEdge(1,5,3);
+        graph.addEdge(2, 4);
+        graph.printGraph();
+
     }
 }

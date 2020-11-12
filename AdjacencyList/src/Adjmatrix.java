@@ -4,10 +4,10 @@ public class Adjmatrix {
 
     public Adjmatrix(int vertices) {
         this.vertex = vertices;
-        this.matrix = new int[vertices][vertices];  // Instanciate the matrix
+        this.matrix = new int[vertices+1][vertices+1];  // Instanciate the matrix
 
-        for (int i = 0; i < vertices; i++) {
-            for (int j = 0; j < vertices; j++) {
+        for (int i = 0; i < (vertices+1); i++) {
+            for (int j = 0; j < (vertices+1); j++) {
                 this.matrix[i][j] = 0;  // Initialize the matrix to 0;
             }
         }
@@ -66,8 +66,8 @@ public class Adjmatrix {
     }
 
     public void printGraph() {
-        for (int i = 0; i < vertex; i++) {
-            for (int j = 0; j < vertex; j++) {
+        for (int i = 1; i < (vertex+1); i++) {
+            for (int j = 1; j < (vertex+1); j++) {
                 System.out.print(this.matrix[i][j] + " ");
             }
             System.out.println();
@@ -81,9 +81,5 @@ public class Adjmatrix {
         adjmatrix.addEdge(1, 3);
 
         adjmatrix.printGraph();
-
     }
-
-
-
 }
