@@ -13,24 +13,24 @@ public class Adjmatrix {
         }
     }
 
-    public String toString() {
+    public String toString() {  // Check the number of vertices
         return "Vertices: " + this.vertex;
     }
 
-    public void addEdge(int from, int to, int weight) {
-        if (weight < 0) {
+    public void addEdge(int from, int to, int weight) { // Add a new edge between vertices
+        if (weight < 0) {   // Check for invalid weight
             System.out.println("Invalid weight.");
             return;
         }
-        if (from > this.vertex || to > this.vertex) {
+        if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
             System.out.println("Invalid vertex/vertices.");
             return;
         }
-        if (from == to) {
+        if (from == to) {   // Check for attempt to connect to self
             System.out.println("Can't create edge to self.");
             return;
         }
-        if (this.matrix[from][to] > 0) {
+        if (this.matrix[from][to] > 0) {    // Check for duplicate edge
             System.out.println("Edge already exists with weight: " + this.matrix[from][to]);
             return;
         }
@@ -39,15 +39,15 @@ public class Adjmatrix {
     }
 
     public void addEdge(int from, int to) { // Alternate method with default edge of 1;
-        if (from > this.vertex || to > this.vertex) {
+        if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
             System.out.println("Invalid vertex/vertices.");
             return;
         }
-        if (from == to) {
+        if (from == to) {   // Check for attempt to connect to self
             System.out.println("Can't create edge to self.");
             return;
         }
-        if (this.matrix[from][to] > 0) {
+        if (this.matrix[from][to] > 0) {    // Check for duplicate edge
             System.out.println("Edge already exists with weight: " + this.matrix[from][to]);
             return;
         }

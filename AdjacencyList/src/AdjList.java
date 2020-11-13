@@ -1,10 +1,10 @@
 import java.util.*;
 
-public class Graph {
+public class AdjList {
     private int vertex;
     private ArrayList<LinkedList<Edge>> list;
 
-    public Graph(int vertex) { // Constructor for graph class
+    public AdjList(int vertex) { // Constructor for graph class
         this.vertex = vertex;
         list = new ArrayList<LinkedList<Edge>>(); // Instanciate the list.
 
@@ -13,25 +13,25 @@ public class Graph {
         }
     }
 
-    public void addVertex() {
+    public void addVertex() {   // Add a new vertex to the graph
         this.vertex++;
         list.add(new LinkedList<Edge>());
     }
 
-    public String toString() {
+    public String toString() {  // Check the number of vertices
         return "Vertices: " + this.vertex;
     }
 
-    public void addEdge(int from, int to, int weight) {
-        if (weight < 0) {
+    public void addEdge(int from, int to, int weight) { // Add a new edge between two vertices with weight
+        if (weight < 0) {   // Check for invalid weight
             System.out.println("Invalid weight.");
             return;
         }
-        if (from > this.vertex || to > this.vertex) {
+        if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
             System.out.println("Invalid vertex/vertices.");
             return;
         }
-        if (from == to) {
+        if (from == to) {   // Check for attempt to connect to self
             System.out.println("Can't create edge to self.");
             return;
         }
@@ -45,12 +45,12 @@ public class Graph {
         list.get(to).add(new Edge(from, weight));
     }
 
-    public void addEdge(int from, int to) {
-        if (from > this.vertex || to > this.vertex) {
+    public void addEdge(int from, int to) { // Alternate method to add edge without set weight (default weight = 1)
+        if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
             System.out.println("Invalid vertex/vertices.");
             return;
         }
-        if (from == to) {
+        if (from == to) {   // Check for attempt to connect to self
             System.out.println("Can't create edge to self.");
             return;
         }
@@ -60,13 +60,17 @@ public class Graph {
                 return;
             }
         }
-        list.get(from).add(new Edge(to));
+        list.get(from).add(new Edge(to));   
         list.get(to).add(new Edge(from));
     }
 
-    public boolean setWeight(int from, int to, int weight) {
+    public boolean setWeight(int from, int to, int weight) {    // Set the weight for a connection, calls findEdge to get the index of the edge in linkedlist
+        if (weight < 0) {   // Check for invalid weight
+            System.out.println("Invalid weight.");
+            return false;
+        }
         int index = findEdge(from, to);
-        if (index == -1) {
+        if (index == -1) {  // No matching edge was found
             return false;
         }
         list.get(from).get(index).setWeight(weight);
@@ -134,7 +138,7 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph(5);
+        AdjList graph = new AdjList(5);
         graph.addEdge(1,5,3);
         graph.addEdge(2, 4);
         graph.printGraph();
