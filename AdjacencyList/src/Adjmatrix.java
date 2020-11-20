@@ -1,8 +1,8 @@
-public class Adjmatrix {
+public class AdjMatrix {
     private int vertex;
     private int [][] matrix;
 
-    public Adjmatrix(int vertices) {
+    public AdjMatrix(int vertices) {
         this.vertex = vertices;
         this.matrix = new int[vertices+1][vertices+1];  // Instanciate the matrix
 
@@ -12,9 +12,9 @@ public class Adjmatrix {
             }
         }
     }
-
-    public String toString() {  // Check the number of vertices
-        return "Vertices: " + this.vertex;
+    
+    public int[][] getMatrix() {
+        return this.matrix;
     }
 
     public void addEdge(int from, int to, int weight) { // Add a new edge between vertices
@@ -55,7 +55,7 @@ public class Adjmatrix {
         this.matrix[to][from] = 1;
     }
 
-    public boolean setWeight(int from, int to, int weight) {
+    public Boolean setWeight(int from, int to, int weight) {
         if (this.matrix[from][to] == 0) {
             System.out.println("Edge doesn't exist.");
             return false;
@@ -75,11 +75,9 @@ public class Adjmatrix {
     }
 
     public static void main(String[] args) {
-        Adjmatrix adjmatrix = new Adjmatrix(5);
-
-        adjmatrix.addEdge(1, 2, 8);
-        adjmatrix.addEdge(1, 3);
+        AdjMatrix adjmatrix = new AdjMatrix(5);
 
         adjmatrix.printGraph();
+
     }
 }

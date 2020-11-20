@@ -22,22 +22,30 @@ public class AdjList {
         return "Vertices: " + this.vertex;
     }
 
+    public int getVertex() {
+        return this.vertex;
+    }
+
+    public ArrayList<LinkedList<Edge>> getList() {
+        return list;
+    }
+
     public void addEdge(int from, int to, int weight) { // Add a new edge between two vertices with weight
         if (weight < 0) {   // Check for invalid weight
-            System.out.println("Invalid weight.");
+            //System.out.println("Invalid weight.");
             return;
         }
         if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
-            System.out.println("Invalid vertex/vertices.");
+            //System.out.println("Invalid vertex/vertices.");
             return;
         }
         if (from == to) {   // Check for attempt to connect to self
-            System.out.println("Can't create edge to self.");
+            //System.out.println("Can't create edge to self.");
             return;
         }
         for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
             if(list.get(from).get(i).getConnection() == to){
-                System.out.println("Edge already exists.");
+                //System.out.println("Edge already exists.");
                 return;
             }
         }
@@ -47,16 +55,16 @@ public class AdjList {
 
     public void addEdge(int from, int to) { // Alternate method to add edge without set weight (default weight = 1)
         if (from > this.vertex || to > this.vertex) {   // Check if vertex exists
-            System.out.println("Invalid vertex/vertices.");
+            //System.out.println("Invalid vertex/vertices.");
             return;
         }
         if (from == to) {   // Check for attempt to connect to self
-            System.out.println("Can't create edge to self.");
+            //System.out.println("Can't create edge to self.");
             return;
         }
         for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
             if(list.get(from).get(i).getConnection() == to){
-                System.out.println("Edge already exists.");
+                //System.out.println("Edge already exists.");
                 return;
             }
         }
@@ -137,11 +145,20 @@ public class AdjList {
         return -1;
     }
 
-    public static void main(String[] args) {
-        AdjList graph = new AdjList(5);
-        graph.addEdge(1,5,3);
-        graph.addEdge(2, 4);
-        graph.printGraph();
+    public void fillGraph(int maxWeight) {      // Populates graph randomly with edges and weights
+        int max = (int)(0.5 * vertex * (vertex-1));    // Max number of edges possible
+        Random rand = new Random();             // Class to generate random numbers
+        max = rand.nextInt(max+1);
+        for (int i=1; i < max; i++) {
+            addEdge(rand.nextInt(vertex)+1,rand.nextInt(vertex)+1,rand.nextInt(maxWeight)+1);
+        }        
+    }
 
+    public static void main(String[] args) {
+        AdjList graph = new AdjList(10);
+        graph.printGraph();
+        System.out.println();
+        graph.fillGraph(10);
+        graph.printGraph();
     }
 }

@@ -1,0 +1,50 @@
+Prims1: MST from list
+
+Prims2: MST from matrix
+
+b versions are with min-heap for queue
+
+INPUT: AdjList, root node (r)
+OUTPUT: MST
+
+queue = nodes  (min prio queue)
+
+node.java
+    int vertex
+    int key
+    int parent
+
+PRIM (adjlist, root)
+    for each v in AdjList
+        node.vertex = v
+        for each edge in v
+            node.key = INF
+            node.parent = null
+    root.key = 0
+
+    while queue != null
+        u = extractmin
+        MST.add(u)
+        for each node in queue
+            if [AdjList.v connected to node]
+                if [v.weight < node.key]
+                    node.key = adjlist.v.weight
+                    node.parent = u
+            
+extractmin
+    find smallest key value in queue
+    return node, remove from queue
+
+
+outputAdjList
+
+
+
+
+
+
+
+
+
+
+
