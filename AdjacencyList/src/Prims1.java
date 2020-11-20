@@ -1,5 +1,7 @@
 import java.util.*;
 
+import java.time.*;
+
 // Implementation of Prim's minimum spanning tree algorithm using unsorted lists with adjacency-list
 public class Prims1 {
 
@@ -19,6 +21,7 @@ public class Prims1 {
     }
 
     public ArrayList<Node> getMST() {   // Run to get MST
+        Instant start = Instant.now();
         Node u = new Node(0);           // Temp initialization
         LinkedList<Edge> adj = new LinkedList<Edge>();  // Initalize list
         while (!Q.isEmpty()) {                          // Run until queue is empty
@@ -34,6 +37,9 @@ public class Prims1 {
                 }                          
             }
         }
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start, end);
+        System.out.println("Execution time for list: " + interval.toMillis() + " ms.");     
         return this.MST;
     }
 
@@ -63,15 +69,10 @@ public class Prims1 {
     }
 
     public static void main(String[] args) {
-        AdjList graph = new AdjList(4);
-        graph.addEdge(1, 2, 1);
-        graph.addEdge(1, 3, 8);
-        graph.addEdge(1, 4, 3);
-        graph.addEdge(2, 3, 5);
-        graph.addEdge(4, 2, 4);
-        graph.addEdge(4, 3, 10);
+        AdjList graph = new AdjList(100);
+        graph.fillGraph(1000);
         
-        Prims1 mst = new Prims1(graph, 1);
+        Prims1 mst = new Prims1(graph, 58);
         mst.printMST();
 
     }

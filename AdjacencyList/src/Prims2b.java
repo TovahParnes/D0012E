@@ -21,6 +21,7 @@ public class Prims2b {
         }
         
         Q.get(root-1).setKey(0); // Set the root node key to 0
+        fixHeap(root-1);
     }
 
     public ArrayList<Node> getMST() {   // Run to get MST
@@ -30,7 +31,7 @@ public class Prims2b {
             u = extractMin();                           
             MST.add(u);
             adj = matrix[u.getVertex()-1];      // Get the list of edges connecting "u" (one row)
-            for (int i = 1; i < adj.length+1; i++) {
+            for (int i = 0; i < adj.length; i++) {
                 for (Node node : Q) {
                     if (((i+1) == node.getVertex()) && adj[i] < node.getKey()) {   // If node is in queue and its new weight is smaller 
                         node.setKey(adj[i]);  // Change the weight of node
@@ -58,12 +59,6 @@ public class Prims2b {
 
     private Node extractMin() {  // Get the node with smallest key in queue, remove and return it
         Node output = Q.get(0); // Start with the node at the top of queue
-
-        for (int i = 0; i < Q.size(); i++) {    // Find the node with smallest key
-            if (Q.get(i).getKey() < output.getKey()) {  
-                output = Q.get(i);                      
-            }
-        }
         Q.remove(output);   // Find and remove the selected node from queue
         return output;
     }

@@ -1,5 +1,7 @@
 import java.util.*;
 
+import java.time.*;
+
 // Implementation of Prim's minimum spanning tree algorithm using min heap with adjacency-list
 public class Prims1b {
 
@@ -16,9 +18,11 @@ public class Prims1b {
         }
         
         Q.get(root-1).setKey(0); // Set the root node key to 0
+        fixHeap(root-1);
     }
 
     public ArrayList<Node> getMST() {   // Run to get MST
+        Instant start = Instant.now();
         Node u = new Node(0);           // Temp initialization
         LinkedList<Edge> adj = new LinkedList<Edge>();  // Initalize list
         while (!Q.isEmpty()) {                          // Run until queue is empty
@@ -35,6 +39,9 @@ public class Prims1b {
                 }                          
             }
         }
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start, end);
+        System.out.println("Execution time for heap: " + interval.toMillis() + " ms.");     
         return this.MST;
     }
 
@@ -76,16 +83,27 @@ public class Prims1b {
     }
 
     public static void main(String[] args) {
-        AdjList graph = new AdjList(4);
-        graph.addEdge(1, 2, 1);
-        graph.addEdge(1, 3, 8);
-        graph.addEdge(1, 4, 3);
-        graph.addEdge(2, 3, 5);
-        graph.addEdge(4, 2, 4);
-        graph.addEdge(4, 3, 10);
-        
-        Prims1b mst = new Prims1b(graph, 1);
-        mst.printMST();
+        Prims1 mst1;
+        Prims1b mst2;
+
+
+        int n = 500;
+        ArrayList<AdjList> graph = new ArrayList<AdjList>();
+        for (int i = 0; i < 6; i++) {
+            graph.add(new AdjList(n));
+            graph.get(i).fillGraph(1000);
+            System.out.println(n + " done!");
+            n+=500;
+        }
+        n = 500;
+        for (int i = 0; i < graph.size(); i++) {
+            System.out.println("    n= " + n);
+            mst1 = new Prims1(graph.get(i), 1);
+            mst2 = new Prims1b(graph.get(i), 1);
+            mst1.getMST();
+            mst2.getMST();
+            n+=500;
+        }
 
     }
     

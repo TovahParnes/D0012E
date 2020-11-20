@@ -10,8 +10,8 @@ public class Prims2 {
 
     public Prims2(AdjMatrix G, int root) {       
         this.matrix = new int[G.getMatrix().length-1][G.getMatrix().length-1];    // Save the matrix from AdjMatrix locally for easier handling
-        for (int i=0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix.length; j++) {
+        for (int i=0; i < matrix.length; i++) {                                   // Removes zeros from adjmatrix matrix
+            for (int j = 0; j < matrix.length; j++) {                           
                 matrix[i][j] = G.getMatrix()[i+1][j+1];
             }
         }
@@ -29,7 +29,7 @@ public class Prims2 {
             u = extractMin();                           
             MST.add(u);
             adj = matrix[u.getVertex()-1];      // Get the list of edges connecting "u" (one row)
-            for (int i = 1; i < adj.length+1; i++) {
+            for (int i = 0; i < adj.length; i++) {
                 for (Node node : Q) {
                     if (((i+1) == node.getVertex()) && adj[i] < node.getKey()) {   // If node is in queue and its new weight is smaller 
                         node.setKey(adj[i]);  // Change the weight of node
@@ -75,7 +75,7 @@ public class Prims2 {
         graph.addEdge(4, 2, 4);
         graph.addEdge(4, 3, 10);
 
-        Prims2 mst = new Prims2(graph, 1);
+        Prims2 mst = new Prims2(graph, 4);
         mst.printMST();
 
     }

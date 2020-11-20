@@ -4,36 +4,50 @@ Prims2: MST from matrix
 
 b versions are with min-heap for queue
 
-INPUT: AdjList, root node (r)
 OUTPUT: MST
+                                                                            times
+getMST(AdjList, root node)
+    While [Q is not empty]                                                      n                                                
+        u = extractMin()                                                        
+        add u to MST
+        for each node adj to u                                                  n-1
+            for each node in queue                                              length of queue
+                if [adj.node is in queue && has smaller weight]
+                    queue.node.key = newkey
+                    queue.node.parent = u
+                    fixHeap(index of queue.node)   //if using minheap
 
-queue = nodes  (min prio queue)
 
-node.java
-    int vertex
-    int key
-    int parent
+                    O(E log(V)) V = n, E = n*(n-1)/2
+                    O( 0.5n(n-1) log(n) )
+                    O( n^2 log(n) )
 
-PRIM (adjlist, root)
-    for each v in AdjList
-        node.vertex = v
-        for each edge in v
-            node.key = INF
-            node.parent = null
-    root.key = 0
+getMST(AdjMatrix, root node)
+    While [Q is not empty]                                                      n                                                
+        u = extractMin()                                                        
+        add u to MST
+        for each node adj to u                                                  n
+            for each node in queue                                              length of queue
+                if [adj.node is in queue && has smaller weight]
+                    queue.node.key = newkey
+                    queue.node.parent = u
+                    fixHeap(index of queue.node)   //if using minheap                    
+    
+extractMin()    //for unsorted list
+    for each node in queue                              
+        find node with smallest key           
+    remove from queue
+    return node
 
-    while queue != null
-        u = extractmin
-        MST.add(u)
-        for each node in queue
-            if [AdjList.v connected to node]
-                if [v.weight < node.key]
-                    node.key = adjlist.v.weight
-                    node.parent = u
-            
-extractmin
-    find smallest key value in queue
-    return node, remove from queue
+extractMin()    //for min-heap                                                  1
+    remove heap-root node from queue
+    return node
+
+fixHeap(index)                                                                  log2(length of queue)                                                                 
+    if [not at heap-root]
+        if [parent.key > index.key]
+            swap parent and child
+            fixHeap(parent.index)
 
 
 outputAdjList
