@@ -1,0 +1,11 @@
+It's just mergesort...
+
+IF [check if 0 or 1 element]
+    return the element
+
+mergesort(leftHalf)
+mergesort(rightHalf)
+
+return merge(leftHalf, rightHalf)
+
+while()

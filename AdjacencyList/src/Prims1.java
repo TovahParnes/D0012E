@@ -19,7 +19,6 @@ public class Prims1 {
         
         Q.get(root-1).setKey(0); // Set the root node key to 0
     }
-
     public ArrayList<Node> getMST() {   // Run to get MST
         Instant start = Instant.now();
         Node u = new Node(0);           // Temp initialization
@@ -36,10 +35,10 @@ public class Prims1 {
                     }
                 }                          
             }
-        }
+        } 
         Instant end = Instant.now();
         Duration interval = Duration.between(start, end);
-        System.out.println("Execution time for list: " + interval.toMillis() + " ms.");     
+        System.out.println("Execution time for list, list: " + interval.toMillis() + " ms.");
         return this.MST;
     }
 
@@ -54,7 +53,7 @@ public class Prims1 {
                 System.out.println("null");
             }
         }
-    }
+    } 
 
     private Node extractMin() {  // Get the node with smallest key in queue, remove and return it
         Node output = Q.get(0); // Start with the node at the top of queue
@@ -69,11 +68,14 @@ public class Prims1 {
     }
 
     public static void main(String[] args) {
-        AdjList graph = new AdjList(100);
+        AdjList graph = new AdjList(9250);
         graph.fillGraph(1000);
-        
-        Prims1 mst = new Prims1(graph, 58);
-        mst.printMST();
+        System.out.println("AdjList done");
 
+        Prims1 prim1 = new Prims1(graph, 1);
+        Prims1b prim1b = new Prims1b(graph, 1);
+
+        prim1.getMST();
+        prim1b.getMST();
     }
 }

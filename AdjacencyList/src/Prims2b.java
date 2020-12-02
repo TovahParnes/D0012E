@@ -1,5 +1,6 @@
 import java.util.*;
 
+import java.time.*;
 
 // Implementation of Prim's minimum spanning tree algorithm using min heap with adjacency-matrix
 public class Prims2b {
@@ -25,6 +26,7 @@ public class Prims2b {
     }
 
     public ArrayList<Node> getMST() {   // Run to get MST
+        Instant start = Instant.now();
         Node u = new Node(0);           // Temp initialization
         int[] adj = new int[matrix.length];  // Initialize a vector
         while (!Q.isEmpty()) {               // Run until queue is empty
@@ -41,6 +43,9 @@ public class Prims2b {
                 }                          
             }
         }
+        Instant end = Instant.now();
+        Duration interval = Duration.between(start, end);
+        System.out.println("Execution time for matrix, heap: " + interval.toMillis() + " ms.");     
         return this.MST;
     }
 
@@ -81,17 +86,6 @@ public class Prims2b {
     }
 
     public static void main(String[] args) {
-        AdjMatrix graph = new AdjMatrix(4);
-        graph.addEdge(1, 2, 1);
-        graph.addEdge(1, 3, 8);
-        graph.addEdge(1, 4, 3);
-        graph.addEdge(2, 3, 5);
-        graph.addEdge(4, 2, 4);
-        graph.addEdge(4, 3, 10);
-
-        Prims2b mst = new Prims2b(graph, 1);
-        mst.printMST();
 
     }
-    
 }

@@ -1,0 +1,16 @@
+new maxheap(3)      c   1
+insert first 3      c   k
+
+for each int-3          n-3
+    if smaller than max
+        insert      c   1
+        heapify     c   log(k)
+
+
+c + c*k + (n-3)(log(k))
+
+k + n log(k)
+
+k <<< n
+
+=> O(n log(k))

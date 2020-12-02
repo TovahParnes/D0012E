@@ -43,12 +43,12 @@ public class AdjList {
             //System.out.println("Can't create edge to self.");
             return;
         }
-        for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
+/*        for (int i = 0; i < list.get(from).size(); i++) {   // Check if connection exists 
             if(list.get(from).get(i).getConnection() == to){
                 //System.out.println("Edge already exists.");
                 return;
             }
-        }
+        } */
         list.get(from).add(new Edge(to, weight));
         list.get(to).add(new Edge(from, weight));
     }
@@ -145,12 +145,13 @@ public class AdjList {
         return -1;
     }
 
-    public void fillGraph(int maxWeight) {      // Populates graph randomly with edges and weights
-        int max = (int)(0.5 * vertex * (vertex-1));    // Max number of edges possible
-        Random rand = new Random();             // Class to generate random numbers
-        max = rand.nextInt(max+1);
-        for (int i=1; i < max; i++) {
-            addEdge(rand.nextInt(vertex)+1,rand.nextInt(vertex)+1,rand.nextInt(maxWeight)+1);
+    public void fillGraph(int maxWeight) {              // Populates graph fully with random weights
+        Random rand = new Random();                     // Class to generate random numbers
+        for (int i=1; i < vertex; i++) {
+            System.out.println(i);
+            for (int j = i+1; j <= vertex; j++) {
+                addEdge(i,j,rand.nextInt(maxWeight)+1);
+            }           
         }        
     }
 

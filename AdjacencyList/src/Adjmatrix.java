@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class AdjMatrix {
     private int vertex;
     private int [][] matrix;
@@ -74,9 +76,19 @@ public class AdjMatrix {
         }
     }
 
+    public void fillGraph(int maxWeight) {              // Populates graph fully with random weights
+        Random rand = new Random();                     // Class to generate random numbers
+        for (int i=1; i < vertex; i++) {
+            System.out.println(i);
+            for (int j = i+1; j <= vertex; j++) {
+                addEdge(i,j,rand.nextInt(maxWeight)+1);
+            }           
+        }        
+    }
+
     public static void main(String[] args) {
         AdjMatrix adjmatrix = new AdjMatrix(5);
-
+        adjmatrix.fillGraph(1000);
         adjmatrix.printGraph();
 
     }
