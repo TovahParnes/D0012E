@@ -1,11 +1,10 @@
-It's just mergesort...
+IF [length = 2]                                 THETA(1)
+    return arr[1] / arr[0]
 
-IF [check if 0 or 1 element]
-    return the element
+leftF = minMax(leftHalf)                        T(n/2)
+rightF = minMax(rightHalf)                      T(n/2)
 
-mergesort(leftHalf)
-mergesort(rightHalf)
+leftMin = min(leftHalf)                         THETA(n)
+rightMax = max(rightHalf)                       THETA(n)
 
-return merge(leftHalf, rightHalf)
-
-while()
+return max(leftF, rightF, rightMax/leftMin)     THETA(1)
