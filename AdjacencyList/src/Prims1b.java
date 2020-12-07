@@ -5,41 +5,68 @@ import java.time.*;
 // Implementation of Prim's minimum spanning tree algorithm using min heap with adjacency-list
 public class Prims1b {
 
-    private ArrayList<Node> Q = new ArrayList<Node>();
+    private TreeSet<Node> Q = new TreeSet<Node>(new comparator());  // This will act as our min-heap with comparator defined further down
+    private Node[] v;
+    private Boolean[] inMST;    // Keep track of which vertices we have added
     private ArrayList<LinkedList<Edge>> list = new ArrayList<LinkedList<Edge>>();
     private ArrayList<Node> MST = new ArrayList<Node>();
 
     public Prims1b(AdjList G, int root) {
         this.list = G.getList(); // Save the list from AdjList locally for easier handling
+        v = new Node[G.getVertex()];
+        inMST = new Boolean[G.getVertex()];
 
-        for (int i = 0; i < G.getVertex(); i++) { // Fill up the queue with all the vertices, keys = inf
-            Q.add(new Node(i + 1)); // i+1 because we can't have 0th node
+        for (int i = 0; i < G.getVertex(); i++) { // Initialize all the vertices, keys = inf
+            v[i] = new Node(i+1);   // i+1 because we can't have 0th node   
+            v[i].setKey(Integer.MAX_VALUE); 
+            inMST[i] = false;
         }
 
-        Q.get(root - 1).setKey(0); // Set the root node key to 0
-        fixHeap(root - 1);
+        // -1 because 1st node is at index 0 etc.
+        v[root-1].setKey(0);
+        inMST[root-1] = true;
+        
+        // Add nodes to our queue
+        for (int i = 0; i < G.getVertex(); i++) {
+            Q.add(v[i]);
+        }
     }
+
+    class comparator implements Comparator<Node> {
+        public int compare(Node node1, Node node2) {
+            return node1.key - node2.key;
+        }
+    }
+
     public ArrayList<Node> getMST() { // Run to get MST
         Instant start = Instant.now();
-        Node u = new Node(0); // Temp initialization
+
         LinkedList<Edge> adj = new LinkedList<Edge>(); // Initalize list
         while (!Q.isEmpty()) { // Run until queue is empty
-            u = extractMin();
+            Node u = Q.pollFirst(); // Remove u from queue, first place, minkey
+            inMST[u.getVertex()-1] = true;
             MST.add(u);
+
             adj = list.get(u.getVertex()); // Get the list of edges connecting "u"
-            for (Edge edge : adj) {
-                for (Node node : Q) {
-                    if ((edge.getConnection() == node.getVertex()) && edge.getWeight() < node.getKey()) { // If node is in queue and weight is smaller                                                                                                        // in queu                                                                                                          // and its new                                                                                                         // weight is                                                                                                         // smaller
-                        node.setKey(edge.getWeight()); // Change the weight of node
-                        node.setParent(u); // And point it to the new parent
-                        fixHeap(Q.indexOf(node));
+
+            for (Edge edge : adj) { // For each edge connected to u
+                int dest = edge.getConnection();
+                if(inMST[dest-1] == false) {    // If connected vertex isn't in queue
+
+                    if ( v[dest-1].getKey() > edge.getWeight() ) {    // If the vertex weight needs update
+                        Q.remove(v[dest-1]);
+                        v[dest-1].setKey(edge.getWeight());
+                        Q.add(v[dest-1]);
+                        v[dest-1].setParent(u);
                     }
                 }
             }
         }
+
         Instant end = Instant.now();
         Duration interval = Duration.between(start,end);
         System.out.println("Execution time for list, heap: " + interval.toMillis() + " ms.");
+
         return this.MST;
     }
 
@@ -56,41 +83,19 @@ public class Prims1b {
         }
     }
 
-    private Node extractMin() { // Get the node with smallest key in queue, remove and return it
-        Node output = Q.get(0); // In min-heap structure it's the first element
-        Q.remove(output);
-
-        return output;
-    }
-
-    private void swap(int i1, int i2) { // Used for min-heap handling, swaps places of nodes at index i1, i2
-        Node temp = Q.get(i1); // Save node at i1
-        Q.set(i1, Q.get(i2)); // Replace with node from i2
-        Q.set(i2, temp); // and put back node from i1 at new spot
-    }
-
-    private void fixHeap(int index) { // Used for min-heap handling, reorders the heap after adding element, input index of recently added element
-        int parent;
-        if (index != 0) { // No operation required if already at root
-            parent = (int) ((index - 1) * 0.5); // Get the parent's index
-            if (Q.get(parent).getKey() > Q.get(index).getKey()) { // Check if any reordering needs to be done
-                swap(parent, index);
-                fixHeap(parent); // Recursive call to check at parent's node (now swapped)
-            }
-        }
-    }
-
     public static void main(String[] args) {
-        AdjList graph = new AdjList(4);
-        graph.addEdge(1, 2, 1);
-        graph.addEdge(1, 3, 8);
-        graph.addEdge(1, 4, 3);
-        graph.addEdge(2, 3, 5);
-        graph.addEdge(4, 2, 4);
-        graph.addEdge(4, 3, 10);
-        graph.printGraph();
+        // AdjList graph = new AdjList(4);
+        // graph.addEdge(1, 2, 1);
+        // graph.addEdge(1, 3, 8);
+        // graph.addEdge(1, 4, 3);
+        // graph.addEdge(2, 3, 5);
+        // graph.addEdge(4, 2, 4);
+        // graph.addEdge(4, 3, 10);
+        AdjList graph = new AdjList(10);
+        graph.fillGraph(50);
+        System.out.println("AdjList done");
 
         Prims1b prim1b = new Prims1b(graph, 1);
-        prim1b.printMST();
+        prim1b.getMST();
     }
 }

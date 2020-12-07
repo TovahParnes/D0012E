@@ -13,6 +13,10 @@ public class Node {
         this.parent = pi;
     }
 
+    public void setVertex(int v) {
+        this.vertex = v;
+    }
+
     public void setKey(int key) {
         this.key = key;
     }

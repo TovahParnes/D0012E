@@ -67,7 +67,7 @@ public class AlgV2 {
     }
 
     public static void main(String args[]) {
-        int arr[] = { 50, 4, 99, 23, 65, 12, 46, 15 };
+        int arr[] = { 76, 43, 67, 33, 31, 56, 11, 81 };
         AlgV2 nice = new AlgV2();
         double out = nice.minMax(arr);
         System.out.println(out);
