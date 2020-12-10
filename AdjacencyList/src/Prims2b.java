@@ -5,7 +5,9 @@ import java.time.*;
 // Implementation of Prim's minimum spanning tree algorithm using min heap with adjacency-matrix
 public class Prims2b {
 
-    private ArrayList<Node> Q = new ArrayList<Node>();
+    private TreeSet<Node> Q = new TreeSet<Node>(new comparator());  // This will act as our min-heap with comparator defined further down
+    private Node[] v;
+    private Boolean[] inMST;
     private int[][] matrix;
     private ArrayList<Node> MST = new ArrayList<Node>();
 
@@ -17,28 +19,49 @@ public class Prims2b {
                 matrix[i][j] = G.getMatrix()[i+1][j+1];
             }
         }
-        for (int i=0; i < matrix.length; i++) { // Fill up the queue with all the vertices, keys = inf
-            Q.add(new Node(i+1));               // i+1 because we can't have 0th node
+
+        v = new Node[matrix.length];
+        inMST = new Boolean[matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            v[i] = new Node(i+1);   // i+1 because we can't have 0th node
+            v[i].setKey(Integer.MAX_VALUE);
+            inMST[i] = false;
         }
-        
-        Q.get(root-1).setKey(0); // Set the root node key to 0
-        fixHeap(root-1);
+
+        v[root-1].setKey(0);
+        inMST[root-1] = true;
+        for (int i=0; i < matrix.length; i++) { // Fill up the queue with all the vertices
+            Q.add(v[i]);                
+        }
+    }
+
+    class comparator implements Comparator<Node> {
+        public int compare(Node node1, Node node2) {
+            return node1.key - node2.key;
+        }
     }
 
     public ArrayList<Node> getMST() {   // Run to get MST
         Instant start = Instant.now();
+
         Node u = new Node(0);           // Temp initialization
         int[] adj = new int[matrix.length];  // Initialize a vector
         while (!Q.isEmpty()) {               // Run until queue is empty
-            u = extractMin();                           
+            u = Q.pollFirst();
+            inMST[u.getVertex()-1] = true;                           
             MST.add(u);
+
             adj = matrix[u.getVertex()-1];      // Get the list of edges connecting "u" (one row)
             for (int i = 0; i < adj.length; i++) {
-                for (Node node : Q) {
-                    if (((i+1) == node.getVertex()) && adj[i] < node.getKey()) {   // If node is in queue and its new weight is smaller 
-                        node.setKey(adj[i]);  // Change the weight of node
-                        node.setParent(u);              // And point it to the new parent
-                        fixHeap(Q.indexOf(node));
+                if (adj[i]!=0) {
+                    if (inMST[i] == false) {
+                        if (adj[i] < v[i].getKey()) {
+                            Q.remove(v[i]);
+                            v[i].setKey(adj[i]);
+                            v[i].setParent(u);
+                            Q.add(v[i]);                                                     
+                        }
                     }
                 }                          
             }
@@ -46,6 +69,7 @@ public class Prims2b {
         Instant end = Instant.now();
         Duration interval = Duration.between(start, end);
         System.out.println("Execution time for matrix, heap: " + interval.toMillis() + " ms.");     
+        
         return this.MST;
     }
 
@@ -62,30 +86,16 @@ public class Prims2b {
         }
     }
 
-    private Node extractMin() {  // Get the node with smallest key in queue, remove and return it
-        Node output = Q.get(0); // Start with the node at the top of queue
-        Q.remove(output);   // Find and remove the selected node from queue
-        return output;
-    }
-
-    private void swap(int i1, int i2) { // Used for min-heap handling, swaps places of nodes at index i1, i2
-        Node temp = Q.get(i1);          // Save node at i1
-        Q.set(i1, Q.get(i2));           // Replace with node from i2
-        Q.set(i2, temp);                // and put back node from i1 at new spot
-    }
-
-    private void fixHeap(int index) {    // Used for min-heap handling, reorders the heap after adding element, input index of recently added element    
-        int parent;
-        if (index != 0){                                            // No operation required if already at root
-            parent = (int)((index-1)*0.5);                          // Get the parent's index
-            if(Q.get(parent).getKey() > Q.get(index).getKey()) {    // Check if any reordering needs to be done
-                swap(parent, index);
-                fixHeap(parent);                                    // Recursive call to check at parent's node (now swapped)
-            }               
-        }       
-    }
-
     public static void main(String[] args) {
+        AdjMatrix graph = new AdjMatrix(4);
+        graph.addEdge(1, 2, 1);
+        graph.addEdge(1, 3, 8);
+        graph.addEdge(1, 4, 3);
+        graph.addEdge(2, 3, 5);
+        graph.addEdge(4, 2, 4);
+        graph.addEdge(4, 3, 10);
 
+        Prims2b prim2b = new Prims2b(graph,1);
+        prim2b.printMST();
     }
 }

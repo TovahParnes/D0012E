@@ -56,8 +56,8 @@ public class Prims1b {
                     if ( v[dest-1].getKey() > edge.getWeight() ) {    // If the vertex weight needs update
                         Q.remove(v[dest-1]);
                         v[dest-1].setKey(edge.getWeight());
-                        Q.add(v[dest-1]);
                         v[dest-1].setParent(u);
+                        Q.add(v[dest-1]);
                     }
                 }
             }
@@ -84,15 +84,10 @@ public class Prims1b {
     }
 
     public static void main(String[] args) {
-        // AdjList graph = new AdjList(4);
-        // graph.addEdge(1, 2, 1);
-        // graph.addEdge(1, 3, 8);
-        // graph.addEdge(1, 4, 3);
-        // graph.addEdge(2, 3, 5);
-        // graph.addEdge(4, 2, 4);
-        // graph.addEdge(4, 3, 10);
-        AdjList graph = new AdjList(10);
-        graph.fillGraph(50);
+        AdjList graph = new AdjList(8000);
+        graph.fillGraph(1000);
+        // AdjList graph = new AdjList(10);
+        // graph.fillGraph(50);
         System.out.println("AdjList done");
 
         Prims1b prim1b = new Prims1b(graph, 1);
