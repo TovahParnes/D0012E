@@ -52,7 +52,7 @@ public class Prims2 {
 
             for (int i = 0; i < adj.length; i++) {
                 if (adj[i] != 0) {  // If there is a connection its >0
-                    if (inMST[i] == false) {
+                    if (inMST[i] == false) { // If not in MST
                         int index = Q.indexOf(v[i]);   // Find node index in queue
                         if (adj[i] < Q.get(index).getKey()) {
                             Q.get(index).setKey(adj[i]);    // Change the weight of node

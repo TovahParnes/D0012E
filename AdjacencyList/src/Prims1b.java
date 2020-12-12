@@ -51,7 +51,7 @@ public class Prims1b {
 
             for (Edge edge : adj) { // For each edge connected to u
                 int dest = edge.getConnection();
-                if(inMST[dest-1] == false) {    // If connected vertex isn't in queue
+                if(inMST[dest-1] == false) { // If not in MST
 
                     if ( v[dest-1].getKey() > edge.getWeight() ) {    // If the vertex weight needs update
                         Q.remove(v[dest-1]);

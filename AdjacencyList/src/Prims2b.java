@@ -54,8 +54,8 @@ public class Prims2b {
 
             adj = matrix[u.getVertex()-1];      // Get the list of edges connecting "u" (one row)
             for (int i = 0; i < adj.length; i++) {
-                if (adj[i]!=0) {
-                    if (inMST[i] == false) {
+                if (adj[i]!=0) { // If there is a connection
+                    if (inMST[i] == false) { // If not in MST
                         if (adj[i] < v[i].getKey()) {
                             Q.remove(v[i]);
                             v[i].setKey(adj[i]);

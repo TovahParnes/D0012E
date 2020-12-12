@@ -45,7 +45,7 @@ public class Prims1 {
 
             for (Edge edge : adj) {
                 int dest = edge.getConnection();
-                if (inMST[dest - 1] == false) {
+                if (inMST[dest - 1] == false) { // If not in MST 
 
                     int index = Q.indexOf(v[dest-1]);   // Find node index in queue
                     if (edge.getWeight() < Q.get(index).getKey()) {
